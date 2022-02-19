@@ -9,12 +9,14 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(dotenv_path=os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -125,3 +127,11 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = "library.Our_user"
+
+# Параметры для создания суперпользователя
+SUPERUSER_NAME = os.getenv('SUPERUSER_NAME')
+SUPERUSER_PASSWORD = os.getenv('SUPERUSER_PASSWORD')
+SUPERUSER_FIRST_NAME = os.getenv('SUPERUSER_FIRST_NAME')
+SUPERUSER_LAST_NAME = os.getenv('SUPERUSER_LAST_NAME')
+SUPERUSER_EMAIL = os.getenv('SUPERUSER_EMAIL')
