@@ -4,7 +4,7 @@ import os
 from django.conf import settings
 from django.core.management import BaseCommand
 from django.db import IntegrityError
-from library.models import Our_user
+from backend.library.models import Our_user   #надо переделать
 
 
 class Command(BaseCommand):
