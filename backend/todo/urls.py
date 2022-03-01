@@ -1,4 +1,4 @@
-"""backend URL Configuration
+"""todo URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
@@ -12,21 +12,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
-
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from library.views import AuthorViewSet, UserViewSet
+from rest_framework.routers import DefaultRouter, SimpleRouter
 
-
+from users.views import UserModelViewSet
+from projects.views import ProjectModelViewSet, TodoModelViewSet
 
 router = DefaultRouter()
-router.register('authors', AuthorViewSet)
-router.register('users', UserViewSet)
+# router = SimpleRouter()       # не имеет удобного интерфейса навигации
+router.register('users', UserModelViewSet)
+router.register('projects', ProjectModelViewSet)
+router.register('todo', TodoModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
+    path('api/', include(router.urls)),
 ]
