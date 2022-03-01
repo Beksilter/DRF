@@ -1,58 +1,57 @@
-import React from "react";
+import React from 'react';
+import axios from 'axios';
+import logo from './logo.svg';
 import './App.css';
-import AuthorList from "./components/author_list";
-import axios from 'axios'
-import Menu from "./components/menu";
-import Footer from "./components/footer";
-import UserList from "./components/user_list";
-
+import MainMenu from './components/MainMenu.js';
+import UserList from './components/User.js';
+import Footer from './components/Footer.js';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      "authors": [],
-      "users": [],
+    constructor(props) {
+        super(props);
+        this.state = {
+            'users': []
+        }
     }
-  }
+    componentDidMount() {
 
-  // Этот метод будет вызван, когда компонент будет полностью смонтировано на экран
-  // Тогда и идем за данными
-  componentDidMount() {
-    axios
-      .get('http://127.0.0.1:8000/api/authors/')
-      .then(responce => {
-        const authors = responce.data
+//        const users = [
+//            {
+//               'username': 'kuznetsov',
+//               'first_name': 'Фёдор',
+//               'last_name': 'Достоевский',
+//               'email': 'ksn@netqis.com'
+//            },
+//            {
+//               'username': 'ivanov',
+//               'first_name': 'Иван',
+//               'last_name': 'Достоевский',
+//               'email': 'ivanov@netqis.com'
+//            },
+//            ]
+//        this.setState({
+//                       'users': users
+//                    })
+        axios.get('http://127.0.0.1:8000/api/users/')
+            .then(response => {
+                const users = response.data
+                this.setState(
+                            {
+                               'users': users
+                            }
+                )
+            }).catch(error => console.log(error))
+    }
 
-        // Поменяли состояние у реакта
-        this.setState({
-          'authors': authors
-        })
-      })
-      .catch(error => console.log(error))
-
-    axios
-      .get('http://127.0.0.1:8000/api/users/')
-      .then(responce => {
-        const users = responce.data
-        // Поменяли состояние у реакта
-        this.setState({
-          'users': users
-        })
-      })
-      .catch(error => console.log(error))
-  }
-
-  render() {
-    return (
-      <div>
-        <Footer/>
-        <Menu/>
-        <AuthorList authors={this.state.authors}/>
-        <UserList users={this.state.users}/>
-      </div>
-    )
-  }
+    render () {
+        return (
+            <div>
+                <MainMenu />
+                <UserList users={this.state.users} />
+                <Footer />
+            </div>
+        )
+    }
 }
 
 export default App;
