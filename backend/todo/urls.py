@@ -16,12 +16,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from users.views import UserModelViewSet
+from users.views import UserModelViewSet, UserCustomViewSet
 from projects.views import ProjectModelViewSet, TodoModelViewSet
 
 router = DefaultRouter()
 # router = SimpleRouter()       # не имеет удобного интерфейса навигации
-router.register('users', UserModelViewSet)
+router.register('users', UserModelViewSet)              # Доступны все методы
+router.register('users_restrict', UserCustomViewSet)    # Доступны только (list, Retrieve, Update)
 router.register('projects', ProjectModelViewSet)
 router.register('todo', TodoModelViewSet)
 
@@ -29,4 +30,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    path('test_views/', include('test_views.urls', namespace='test_views'), name='test_views'),
 ]
