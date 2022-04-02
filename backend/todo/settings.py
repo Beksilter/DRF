@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',   # required for serving swagger ui's css/js files
     'drf_yasg',                     # for Swagger
+    'graphene_django',              # Required for GraphiQL
 
     'rest_framework',
     'corsheaders',
@@ -188,3 +189,8 @@ from rest_framework.versioning import URLPathVersioning, AcceptHeaderVersioning,
 
 if DEBUG:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append('rest_framework.renderers.BrowsableAPIRenderer')
+
+# Required for GraphiQL
+GRAPHENE = {
+    "SCHEMA": "todo.schema.schema"
+}
